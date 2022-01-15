@@ -1,4 +1,4 @@
-﻿using Musicalog.Domain.Base;
+﻿using FluentValidation;
 using Musicalog.Models.Entities;
 using System;
 using System.Collections.Generic;
@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Musicalog.Domain
+namespace Musicalog.Domain.Validators
 {
-    public interface IArtistServices : IBaseServices<Artist>
+    public class CreateArtistValitador: AbstractValidator<Artist>
     {
     }
 }

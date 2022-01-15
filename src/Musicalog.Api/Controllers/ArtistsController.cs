@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Musicalog.Domain;
+using Musicalog.Domain.Services;
 using Musicalog.Models.Dtos;
 using Musicalog.Models.Entities;
 

@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Musicalog.Domain
+namespace Musicalog.Domain.Services
 {
-    public interface IAlbumServices : IBaseServices<Album>
+    public interface IArtistServices : IBaseServices<Artist>
     {
     }
 }

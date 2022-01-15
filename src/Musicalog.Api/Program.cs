@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Musicalog.Domain;
+using Musicalog.Domain.Services;
 using Musicalog.Repository.DataContexts;
 using Musicalog.Services;
 

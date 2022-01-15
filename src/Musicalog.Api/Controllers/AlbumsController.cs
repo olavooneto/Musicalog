@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Musicalog.Domain;
+using Musicalog.Domain.Services;
 using Musicalog.Models.Dtos;
 using Musicalog.Models.Entities;
 
@@ -31,7 +32,7 @@ namespace Musicalog.Api.Controllers
 
             if (album is null)
                 return NotFound();
-
+            
             return Ok(this._mapper.Map<AlbumDto>(album));
         }
 
