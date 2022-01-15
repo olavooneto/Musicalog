@@ -1,3 +1,5 @@
 create database MusicLogDB
 go
-use MusicLogDB
+use MusicLogDB  
+GO
+select * from MusicLogDB.dbo.Artists

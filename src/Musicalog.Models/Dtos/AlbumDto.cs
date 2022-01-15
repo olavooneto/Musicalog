@@ -1,4 +1,5 @@
-﻿using Musicalog.Models.Enums;
+﻿using Musicalog.Models.Dtos.Base;
+using Musicalog.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Musicalog.Models.Dtos
 {
-    public class AlbumDto
+    public class AlbumDto : BaseDto
     {
         public string Title { get; set; }
 
