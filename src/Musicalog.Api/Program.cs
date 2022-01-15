@@ -1,4 +1,7 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Musicalog.Domain;
+using Musicalog.Repository.DataContexts;
 using Musicalog.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,11 +16,19 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var services = builder.Services;
-// Health Check
-services.AddHealthChecks();
 
 // AutoMapper
 services.AddAutoMapper(typeof(Musicalog.Models.MappingProfiles.AlbumMapperProfile).Assembly);
+
+// Database 
+services.AddDbContext<MusicLogDBDataContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("MusicLogDb")));
+
+// Versioning
+services.AddApiVersioning(options =>
+{
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.DefaultApiVersion = ApiVersion.Default;
+});
 
 var app = builder.Build();
 

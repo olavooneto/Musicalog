@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Musicalog.Models.Entities;
+using Musicalog.Models.Maps;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,9 @@ namespace Musicalog.Repository.DataContexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.ApplyConfiguration(new AlbumEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new ArtistEntityTypeConfiguration());
         }
     }
 }
