@@ -57,6 +57,62 @@ namespace Musicalog.ServicesTests
         }
 
         [TestMethod]
+        public async Task ListAllTest_FilterByAlbum()
+        {
+            // Arrange
+            string album = "";
+            string artist = "Edge";
+
+            // Action
+            var result = await this._albumServices.ListAll(album, artist);
+
+            // Assert
+            Assert.IsTrue(result.Any());
+        }
+
+        [TestMethod]
+        public async Task ListAllTest_FilterByAlbumAndArtist()
+        {
+            // Arrange
+            string album = "Sunday";
+            string artist = "Edge";
+
+            // Action
+            var result = await this._albumServices.ListAll(album, artist);
+
+            // Assert
+            Assert.IsTrue(result.Any());
+        }
+
+        [TestMethod]
+        public async Task ListAllTest_InvalidFilter()
+        {
+            // Arrange
+            string album = "NONE";
+            string artist = "none";
+
+            // Action
+            var result = await this._albumServices.ListAll(album, artist);
+
+            // Assert
+            Assert.IsTrue(!result.Any());
+        }
+
+        [TestMethod]
+        public async Task ListAllTest_FilterByArtist()
+        {
+            // Arrange
+            string album = "Sunday";
+            string artist = "";
+
+            // Action
+            var result = await this._albumServices.ListAll(album, artist);
+
+            // Assert
+            Assert.IsTrue(result.Any());
+        }
+
+        [TestMethod]
         public async Task GetIdAsyncTest()
         {
             // Action 

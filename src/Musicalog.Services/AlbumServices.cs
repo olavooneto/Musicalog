@@ -24,6 +24,20 @@ namespace Musicalog.Services
         /// <returns>IList&lt;Album&gt;.</returns>
         public override async Task<IList<Album>> ListAll() => await this.Context.Albums.Include(x => x.Artists).ToListAsync();
 
+        public async Task<IList<Album>> ListAll(string album, string artist)
+        {
+            IQueryable<Album> query = this.Context.Albums.Include(x => x.Artists);
+
+            // Filter by parameters
+            if (!string.IsNullOrEmpty(album))
+                query = query.Where(x => x.Title.Contains(album.Trim(), StringComparison.InvariantCultureIgnoreCase));
+
+            if (!string.IsNullOrEmpty(artist))
+                query = query.Where(x => x.Artists.Any(a => a.Name.Contains(artist, StringComparison.InvariantCultureIgnoreCase)));
+
+            return await query.ToListAsync();
+        }
+
         /// <summary>
         /// Get identifier as an asynchronous operation.
         /// </summary>
