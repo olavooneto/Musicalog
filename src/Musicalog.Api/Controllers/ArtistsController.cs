@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Musicalog.Domain;
+using Musicalog.Domain.Exceptions;
 using Musicalog.Domain.Services;
 using Musicalog.Models.Dtos;
 using Musicalog.Models.Entities;
@@ -14,8 +15,9 @@ namespace Musicalog.Api.Controllers
     {
         private readonly IArtistServices _artistService;
         private readonly IMapper _mapper;
+        private readonly ILogger<ArtistsController> _logger;
 
-        public ArtistsController(IArtistServices artistService, IMapper mapper) => (_artistService, _mapper) = (artistService, mapper);
+        public ArtistsController(IArtistServices artistService, IMapper mapper, ILogger<ArtistsController> logger) => (_artistService, _mapper, _logger) = (artistService, mapper, logger);
 
         [MapToApiVersion("1.0")]
         [HttpGet]
@@ -45,8 +47,6 @@ namespace Musicalog.Api.Controllers
             var artist = this._mapper.Map<Artist>(artistDto);
             await this._artistService.AddAsync(artist);
 
-            await this._artistService.CommitAsync();
-
             return Ok(artist.Id);
         }
 
@@ -54,36 +54,50 @@ namespace Musicalog.Api.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> Update(int id, ArtistDto artistDto)
         {
-            var artist = await this._artistService.GetIdAsync(id);
+            try
+            {
+                await this._artistService.Update(id, this._mapper.Map<Artist>(artistDto));
 
-            if (artist is null)
-                return NotFound();
+                return Ok();
+            }
+            catch (NotFoundException nfException)
+            {
+                return NotFound(nfException.Message);
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, ex.Message);
 
-            artist.Name = artistDto.Name;
-
-            this._artistService.Update(artist);
-            await this._artistService.CommitAsync();
-
-            return Ok();
+                return BadRequest(ex.Message);
+            }
         }
 
         [MapToApiVersion("1.0")]
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Delete(int id)
         {
-            var artist = await this._artistService.GetIdAsync(id);
+            try
+            {
+                await this._artistService.Delete(id);
 
-            if (artist is null)
-                return NotFound();
+                return Ok();
+            }
+            catch (NotFoundException nfException)
+            {
+                return NotFound(nfException.Message);
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, ex.Message);
 
-            this._artistService.Remove(artist);
-            await this._artistService.CommitAsync();
-
-            return Ok();
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

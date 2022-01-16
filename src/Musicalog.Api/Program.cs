@@ -1,9 +1,14 @@
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Musicalog.Domain;
 using Musicalog.Domain.Services;
+using Musicalog.Models.Validators;
 using Musicalog.Repository.DataContexts;
 using Musicalog.Services;
+
+using System.Text.Json.Serialization;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +27,18 @@ var services = builder.Services;
 services.AddAutoMapper(typeof(Musicalog.Models.MappingProfiles.AlbumMapperProfile).Assembly);
 
 // Database 
-services.AddDbContext<MusicLogDBDataContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("MusicLogDb")));
+services.AddDbContext<MusicLogDBDataContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("MusicLogDb")).EnableSensitiveDataLogging());
+
+// Add Validator
+services.AddFluentValidation(options => options.RegisterValidatorsFromAssemblyContaining<ArtistValitador>());
+
+// Add Enum Validations 
+services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                }).AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve)
+                .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
 // Versioning
 services.AddApiVersioning(options =>

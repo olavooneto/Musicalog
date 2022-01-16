@@ -13,7 +13,8 @@ namespace Musicalog.Models.MappingProfiles
     {
         public ArtistMapperProfile()
         {
-            CreateMap<Artist, ArtistDto>();
+            CreateMap<Artist, ArtistDto>()
+                .ForMember(dest => dest.Albums, opt => opt.MapFrom(src => src.Albums.Select(x => new AlbumDto() { Title = x.Title, Id = x.Id, AlbumType = x.AlbumType })));
 
             CreateMap<ArtistDto, Artist>();
         }

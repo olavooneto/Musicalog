@@ -14,23 +14,23 @@ namespace Musicalog.Services.Base
 
         public virtual async Task<IList<T>> ListAll() => await Context.Set<T>().ToListAsync();
 
-        public async Task AddAsync(T entity) => await Context.Set<T>().AddAsync(entity);
+        public virtual async Task AddAsync(T entity) => await Context.Set<T>().AddAsync(entity);
 
-        public EntityEntry<T> Update(T entity) => Context.Set<T>().Attach(entity);
+        public virtual EntityEntry<T> Update(T entity) => Context.Set<T>().Attach(entity);
 
-        public async Task AddRangeAsync(IEnumerable<T> entitites) => await Context.Set<T>().AddRangeAsync(entitites);
+        public virtual async Task AddRangeAsync(IEnumerable<T> entitites) => await Context.Set<T>().AddRangeAsync(entitites);
 
-        public IEnumerable<T> Find(Expression<Func<T, bool>> predicate) => Context.Set<T>().Where(predicate);
+        public virtual IEnumerable<T> Find(Expression<Func<T, bool>> predicate) => Context.Set<T>().Where(predicate);
 
-        public async Task<IEnumerable<T>> GetAllAsync() => await Context.Set<T>().ToListAsync();
+        public virtual async Task<IEnumerable<T>> GetAllAsync() => await Context.Set<T>().ToListAsync();
 
-        public async ValueTask<T> GetIdAsync(int id) => await Context.Set<T>().FindAsync(id);
+        public virtual async ValueTask<T> GetIdAsync(int id) => await Context.Set<T>().FindAsync(id);
 
-        public void Remove(T entity) => Context.Set<T>().Remove(entity);
+        public virtual void Remove(T entity) => Context.Set<T>().Remove(entity);
 
-        public void RemoveRange(IEnumerable<T> entitites) => Context.Set<T>().RemoveRange(entitites);
+        public virtual void RemoveRange(IEnumerable<T> entitites) => Context.Set<T>().RemoveRange(entitites);
 
-        public async Task<T> SingleOrDefaultAsync(Expression<Func<T, bool>> predicate) => await Context.Set<T>().SingleOrDefaultAsync(predicate);
+        public virtual async Task<T> SingleOrDefaultAsync(Expression<Func<T, bool>> predicate) => await Context.Set<T>().SingleOrDefaultAsync(predicate);
 
         public async Task<int> CommitAsync()
         {

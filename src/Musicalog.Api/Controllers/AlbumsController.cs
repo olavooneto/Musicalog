@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Musicalog.Domain;
+using Musicalog.Domain.Exceptions;
 using Musicalog.Domain.Services;
 using Musicalog.Models.Dtos;
 using Musicalog.Models.Entities;
@@ -14,8 +15,9 @@ namespace Musicalog.Api.Controllers
     {
         private readonly IAlbumServices _albumService;
         private readonly IMapper _mapper;
+        private readonly ILogger<AlbumsController> _logger;
 
-        public AlbumsController(IAlbumServices albumService, IMapper mapper) => (_albumService, _mapper) = (albumService, mapper);
+        public AlbumsController(IAlbumServices albumService, IMapper mapper, ILogger<AlbumsController> logger) => (_albumService, _mapper, _logger) = (albumService, mapper, logger);
 
         [MapToApiVersion("1.0")]
         [HttpGet]
@@ -26,65 +28,102 @@ namespace Musicalog.Api.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AlbumDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Get(int id)
         {
-            var album = await this._albumService.GetIdAsync(id);
+            try
+            {
+                return Ok(this._mapper.Map<AlbumDto>(await this._albumService.GetIdAsync(id)));
+            }
+            catch (NotFoundException nfException)
+            {
+                return NotFound(nfException.Message);
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, ex.Message);
 
-            if (album is null)
-                return NotFound();
-            
-            return Ok(this._mapper.Map<AlbumDto>(album));
+                return BadRequest(ex.Message);
+            }
         }
 
 
         [MapToApiVersion("1.0")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
-        public async Task<ActionResult<int>> Create(AlbumDto AlbumDto)
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<int>> Create(AlbumForCreationUpdateDto AlbumDto)
         {
-            var album = this._mapper.Map<Album>(AlbumDto);
-            await this._albumService.AddAsync(album);
+            try
+            {
+                var album = this._mapper.Map<Album>(AlbumDto);
+                await this._albumService.AddAsync(album);
 
-            await this._albumService.CommitAsync();
+                return Ok(album.Id);
+            }
+            catch (NotFoundException nfException)
+            {
+                return NotFound(nfException.Message);
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, ex.Message);
 
-            return Ok(album.Id);
+                return BadRequest(ex.Message);
+            }
         }
 
         [MapToApiVersion("1.0")]
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> Update(int id, AlbumDto AlbumDto)
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> Update(int id, AlbumForCreationUpdateDto AlbumDto)
         {
-            var album = await this._albumService.GetIdAsync(id);
+            try
+            {
+                await this._albumService.Update(id, this._mapper.Map<Album>(AlbumDto));
+                await this._albumService.CommitAsync();
 
-            if (album is null)
-                return NotFound();
+                return Ok();
+            }
+            catch (NotFoundException nfException)
+            {
+                return NotFound(nfException.Message);
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, ex.Message);
 
-            album.Title = AlbumDto.Title;
-            album.AlbumType = AlbumDto.AlbumType;
-            
-            this._albumService.Update(album);
-            await this._albumService.CommitAsync();
-
-            return Ok();
+                return BadRequest(ex.Message);
+            }
         }
 
         [MapToApiVersion("1.0")]
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Delete(int id)
         {
-            var album = await this._albumService.GetIdAsync(id);
+            try
+            {
+                await this._albumService.Delete(id);
 
-            if (album is null)
-                return NotFound();
+                return Ok();
+            }
+            catch (NotFoundException nfException)
+            {
+                return NotFound(nfException.Message);
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, ex.Message);
 
-            this._albumService.Remove(album);
-            await this._albumService.CommitAsync();
-
-            return Ok();
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
+

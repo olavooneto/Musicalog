@@ -10,5 +10,8 @@ namespace Musicalog.Domain.Services
 {
     public interface IArtistServices : IBaseServices<Artist>
     {
+        Task Update(int id, Artist artist);
+
+        Task Delete(int id);    
     }
 }
