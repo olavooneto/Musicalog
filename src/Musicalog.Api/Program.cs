@@ -1,7 +1,6 @@
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Musicalog.Domain;
 using Musicalog.Domain.Services;
 using Musicalog.Models.Validators;
 using Musicalog.Repository.DataContexts;

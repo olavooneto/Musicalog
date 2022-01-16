@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Musicalog.Models.Entities;
 using Musicalog.Models.Maps;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Musicalog.Repository.DataContexts
 {

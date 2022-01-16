@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Musicalog.Domain;
 using Musicalog.Domain.Exceptions;
 using Musicalog.Domain.Services;
 using Musicalog.Models.Dtos;
@@ -17,13 +15,28 @@ namespace Musicalog.Api.Controllers
         private readonly IMapper _mapper;
         private readonly ILogger<AlbumsController> _logger;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AlbumsController"/> class.
+        /// </summary>
+        /// <param name="albumService">The album service.</param>
+        /// <param name="mapper">The mapper.</param>
+        /// <param name="logger">The logger.</param>
         public AlbumsController(IAlbumServices albumService, IMapper mapper, ILogger<AlbumsController> logger) => (_albumService, _mapper, _logger) = (albumService, mapper, logger);
 
+        /// <summary>
+        /// Lists this instance.
+        /// </summary>
+        /// <returns>ActionResult&lt;IList&lt;AlbumDto&gt;&gt;.</returns>
         [MapToApiVersion("1.0")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IList<AlbumDto>))]
         public async Task<ActionResult<IList<AlbumDto>>> List() => Ok(this._mapper.Map<IList<AlbumDto>>(await this._albumService.ListAll()));
 
+        /// <summary>
+        /// Gets the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>IActionResult.</returns>
         [MapToApiVersion("1.0")]
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AlbumDto))]
@@ -47,7 +60,11 @@ namespace Musicalog.Api.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Creates the specified album dto.
+        /// </summary>
+        /// <param name="AlbumDto">The album dto.</param>
+        /// <returns>ActionResult&lt;System.Int32&gt;.</returns>
         [MapToApiVersion("1.0")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
@@ -74,6 +91,12 @@ namespace Musicalog.Api.Controllers
             }
         }
 
+        /// <summary>
+        /// Updates the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="AlbumDto">The album dto.</param>
+        /// <returns>ActionResult.</returns>
         [MapToApiVersion("1.0")]
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -100,6 +123,11 @@ namespace Musicalog.Api.Controllers
             }
         }
 
+        /// <summary>
+        /// Deletes the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>IActionResult.</returns>
         [MapToApiVersion("1.0")]
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]

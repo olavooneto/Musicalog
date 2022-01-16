@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Musicalog.Domain;
 using Musicalog.Domain.Exceptions;
 using Musicalog.Domain.Services;
 using Musicalog.Models.Entities;
@@ -11,22 +9,26 @@ namespace Musicalog.Services
 {
     public class AlbumServices : BaseServices<Album>, IAlbumServices
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AlbumServices"/> class.
+        /// </summary>
+        /// <param name="context">The context.</param>
         public AlbumServices(MusicLogDBDataContext context) : base(context)
         {
 
         }
 
         /// <summary>
-        /// Retrieve the list of Albums
+        /// Lists all.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>IList&lt;Album&gt;.</returns>
         public override async Task<IList<Album>> ListAll() => await this.Context.Albums.Include(x => x.Artists).ToListAsync();
 
         /// <summary>
-        /// Retrieve the Album by Id
+        /// Get identifier as an asynchronous operation.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">The identifier.</param>
+        /// <returns>A Task&lt;Album&gt; representing the asynchronous operation.</returns>
         /// <exception cref="NotFoundException"></exception>
         public async override ValueTask<Album> GetIdAsync(int id)
         {
@@ -39,10 +41,10 @@ namespace Musicalog.Services
         }
 
         /// <summary>
-        /// Add a new Album into DB 
+        /// Add as an asynchronous operation.
         /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
+        /// <param name="entity">The entity.</param>
+        /// <returns>A Task representing the asynchronous operation.</returns>
         public async override Task AddAsync(Album entity)
         {
             entity.Artists = GetArtists(entity);
@@ -52,11 +54,10 @@ namespace Musicalog.Services
         }
 
         /// <summary>
-        /// Update the album into DB
+        /// Updates the specified identifier.
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="entity"></param>
-        /// <returns></returns>
+        /// <param name="id">The identifier.</param>
+        /// <param name="entity">The entity.</param>
         /// <exception cref="NotFoundException"></exception>
         public async Task Update(int id, Album entity)
         {
@@ -67,6 +68,7 @@ namespace Musicalog.Services
 
             album.Title = entity.Title;
             album.AlbumType = entity.AlbumType;
+            album.Stock = entity.Stock;
 
             // Retrieve the list of artists from Database
             // To update the current list from DB
@@ -89,11 +91,11 @@ namespace Musicalog.Services
         }
 
         /// <summary>
-        /// Get the
+        /// Gets the artists.
         /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
-        /// <exception cref="NotFoundException"></exception>
+        /// <param name="entity">The entity.</param>
+        /// <returns>List&lt;Artist&gt;.</returns>
+        /// <exception cref="NotFoundException">Artist Id informed into Music was not found.</exception>
         private List<Artist> GetArtists(Album entity)
         {
             List<Artist> artists = entity.Artists.Select(x => Context.Artists.Find(x.Id)).ToList();
@@ -104,10 +106,10 @@ namespace Musicalog.Services
         }
 
         /// <summary>
-        /// Get the Album and Artists associated by Album id
+        /// Gets the album by identifier.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">The identifier.</param>
+        /// <returns>Album.</returns>
         private async Task<Album> GetAlbumById(int id) => await base.Context.Albums.Include(x => x.Artists).SingleOrDefaultAsync(x => x.Id == id);
     }
 }

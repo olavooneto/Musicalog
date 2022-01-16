@@ -11,7 +11,7 @@ using Musicalog.Repository.DataContexts;
 namespace Musicalog.Repository.Migrations
 {
     [DbContext(typeof(MusicLogDBDataContext))]
-    [Migration("20220115133410_InitialDatabase")]
+    [Migration("20220116135701_InitialDatabase")]
     partial class InitialDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -48,6 +48,9 @@ namespace Musicalog.Repository.Migrations
 
                     b.Property<int>("AlbumType")
                         .HasColumnType("int");
+
+                    b.Property<bool>("Stock")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Title")
                         .IsRequired()

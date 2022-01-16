@@ -15,7 +15,8 @@ namespace Musicalog.Repository.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AlbumType = table.Column<int>(type: "int", nullable: false)
+                    AlbumType = table.Column<int>(type: "int", nullable: false),
+                    Stock = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {

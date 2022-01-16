@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Musicalog.Domain.Constants
-{	public static class AppContants
+﻿namespace Musicalog.Domain.Constants
+{
+    public static class AppContants
 	{
 		public static string ValidatorStringNotEmpty = "{PropertyName} must not be empty";
 

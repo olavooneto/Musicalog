@@ -19,7 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Musicalog.Repository", "src
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Musicalog.Services", "src\Musicalog.Services\Musicalog.Services.csproj", "{C65A277E-2E49-41EE-941B-AC4882070A16}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Musicalog.Domain", "src\Musicalog.Domain\Musicalog.Domain.csproj", "{F5D1BC6D-DFD7-4FCD-84E3-444A67DC0533}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Musicalog.Domain", "src\Musicalog.Domain\Musicalog.Domain.csproj", "{F5D1BC6D-DFD7-4FCD-84E3-444A67DC0533}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Musicalog.ServicesTests", "test\Musicalog.ServicesTests\Musicalog.ServicesTests.csproj", "{300588B2-06E7-4F1A-93BF-207C051319D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,10 @@ Global
 		{F5D1BC6D-DFD7-4FCD-84E3-444A67DC0533}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5D1BC6D-DFD7-4FCD-84E3-444A67DC0533}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5D1BC6D-DFD7-4FCD-84E3-444A67DC0533}.Release|Any CPU.Build.0 = Release|Any CPU
+		{300588B2-06E7-4F1A-93BF-207C051319D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{300588B2-06E7-4F1A-93BF-207C051319D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{300588B2-06E7-4F1A-93BF-207C051319D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{300588B2-06E7-4F1A-93BF-207C051319D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,6 +63,7 @@ Global
 		{342A0E31-B00E-4B2A-8E35-5B689AF064E9} = {BDFD0464-94B2-4B52-911B-3DD45B698498}
 		{C65A277E-2E49-41EE-941B-AC4882070A16} = {0D98ED47-2918-443A-A320-CE93925CCF20}
 		{F5D1BC6D-DFD7-4FCD-84E3-444A67DC0533} = {BDFD0464-94B2-4B52-911B-3DD45B698498}
+		{300588B2-06E7-4F1A-93BF-207C051319D3} = {1AF3EA2B-53BA-400E-9623-392EC6F3CC94}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {51C73967-ED53-4E45-924A-1E3A6E7953E2}

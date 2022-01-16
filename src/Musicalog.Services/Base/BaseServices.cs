@@ -38,7 +38,7 @@ namespace Musicalog.Services.Base
             {
                 return await this.Context.SaveChangesAsync();
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine($"--------------{ DateTime.UtcNow.ToString() }--------------");
                 System.Diagnostics.Debug.WriteLine(e.ToString());

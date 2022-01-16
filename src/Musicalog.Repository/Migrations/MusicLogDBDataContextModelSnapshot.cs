@@ -27,7 +27,7 @@ namespace Musicalog.Repository.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("ArtistsId")
-                        .HasColumnType("int");  
+                        .HasColumnType("int");
 
                     b.HasKey("AlbumsId", "ArtistsId");
 
@@ -46,6 +46,9 @@ namespace Musicalog.Repository.Migrations
 
                     b.Property<int>("AlbumType")
                         .HasColumnType("int");
+
+                    b.Property<bool>("Stock")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Title")
                         .IsRequired()
