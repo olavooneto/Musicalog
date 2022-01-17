@@ -97,7 +97,77 @@ and then
 dotnet run
 ```
 
-In both choices, the application will start and be listen to by https://localhost:7155 address
+In both choices, the application will start and be listen to by https://localhost:7155 address.
+Also, you can access the swagger documentation in the address: https://localhost:7155/swagger/index.html
 
 
 ## API Documentation
+Follow below some examples to create, retrieve, update, delete and filter the Artists and Album data from the respective endpoints. 
+
+### Artists Endpoint
+#### List
+> Endpoint => https://localhost:7155/api/v1/Artists | Method => Get
+#### Retrieve
+> Endpoint => https://localhost:7155/api/v1/Artists/{id} | Method => Get
+#### Create
+> Endpoint => https://localhost:7155/api/v1/Artists | Method => POST
+```json
+{
+    "Name": "Brian may"
+}
+```
+#### Update
+> Endpoint => https://localhost:7155/api/v1/Artists/{id} | Method => PUT
+```json
+{
+    "Name": "Freddie Mercury"
+}
+```
+#### Delete
+> Endpoint => https://localhost:7155/api/v1/Artists/{id} | Method => DELETE
+
+### Albums Endpoint
+#### List
+> Endpoint => https://localhost:7155/api/v1/Albums | Method => Get
+### Filter
+The filter can be made by Artist Name or Album Name using the query string parameters
+> https://localhost:7155/api/v1/Albums?Artist=Fred
+
+or
+
+> https://localhost:7155/api/v1/Albums?Album=inn
+
+or both
+
+> https://localhost:7155/api/v1/Albums?Artist=Fred&Album=Inn
+#### Retrieve
+> Endpoint => https://localhost:7155/api/v1/Albums/{id} | Method => Get
+#### Create
+> Endpoint => https://localhost:7155/api/v1/Albums | Method => POST
+```json
+{
+    "Title": "Sunday Blood Sunday",
+    "AlbumType": "CD",
+    "Artists": [1,2,3],
+    "Stock": true
+}
+```
+the `Artists` receives an array list of int with artists Identifiers (id)
+#### Update
+> Endpoint => https://localhost:7155/api/v1/Albums/{id} | Method => PUT
+```json
+{
+    "Title": "Sunday Blood Sunday",
+    "AlbumType": "CD",
+    "Artists": [1,2,3],
+    "Stock": true
+}
+```
+the `Artists` receives an array list of int with artists Identifiers (id)
+#### Delete
+> Endpoint => https://localhost:7155/api/v1/Albums/{id} | Method => DELETE
+
+---
+That's it, I hope that you enjoy the application, if you have and question, problem or just want to say hello! feel free to contact me at olavo.o.neto@gmail.com
+
+Thank you!! :)
