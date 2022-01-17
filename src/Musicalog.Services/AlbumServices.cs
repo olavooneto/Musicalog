@@ -30,10 +30,10 @@ namespace Musicalog.Services
 
             // Filter by parameters
             if (!string.IsNullOrEmpty(album))
-                query = query.Where(x => x.Title.Contains(album.Trim(), StringComparison.InvariantCultureIgnoreCase));
+                query = query.Where(x => x.Title.Contains(album.Trim()));
 
             if (!string.IsNullOrEmpty(artist))
-                query = query.Where(x => x.Artists.Any(a => a.Name.Contains(artist, StringComparison.InvariantCultureIgnoreCase)));
+                query = query.Where(x => x.Artists.Any(a => a.Name.Contains(artist)));
 
             return await query.ToListAsync();
         }
