@@ -2,13 +2,14 @@
 
 # Welcome to the MusicLog, your Music Store API
 
-<details><summary>Requirements</summary>
-1- Microsoft .Net 6.0 (https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
-2- Microsoft Sql Server express or other versions (https://www.microsoft.com/pt-br/sql-server/sql-server-downloads)    
-</details>
+## Requirements
+* 1- Microsoft .Net 6.0 (https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
+* 2- Microsoft Sql Server express or other versions (https://www.microsoft.com/pt-br/sql-server/sql-server-downloads)    
+* [optional] 3- Microsoft Visual Studio 2022 Express or other versions (https://visualstudio.microsoft.com/pt-br/vs/)
+* [optional] 4- Windows Terminal or other terminal app (https://www.microsoft.com/pt-br/p/windows-terminal/9n0dx20hk701?activetab=pivot:overviewtab)
 
-<details><summary>Installation</summary>
-## 1- Create the Databsase 
+## Installation
+### 1- Create the Databsase 
 Run the Script SQL below to create the database. The same script can be found in the directory *scripts\001 - CreateDatabase.sql* 
 ```sql
 use [master]
@@ -76,14 +77,27 @@ ALTER TABLE [dbo].[AlbumArtist] CHECK CONSTRAINT [FK_AlbumArtist_Artists_Artists
 GO
 ````
 ---
-## 2- Configure the Application*
-Into the folder *src\Musicalog.Api\appsettings.json*  alter the *ConnectionString* to configure for you environment  
+### 2- Configure the Application
+Into the folder `src\Musicalog.Api\appsettings.json`  alter the ConnectionString to configure for you environment,
 For example:
-```
+```yaml
 "ConnectionStrings": { "MusicLogDb": "Data Source=.;Initial Catalog=MusicLogDB;Persist Security Info=True;User ID=SA;Password=1q2w3e4r!Q@W#E" }
 ```
-</details>
 
-<details><summary>API Documentation</summary>
+### 3- Compile and Run the application
+At this moment you can compile and run the application using the Visual Studio or using the .Net Command-line following the steps below.
 
-</details>
+Using the Windows Terminal or other, navigate to `src\Musicalog.Api` folder and run the command
+
+```console
+dotnet build
+```
+and then
+```console
+dotnet run
+```
+
+In both choices, the application will start and be listen to by https://localhost:7155 address
+
+
+## API Documentation
